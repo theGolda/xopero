@@ -12,7 +12,8 @@
       "@store/*": ["app/store/*"],
       "@user/*": ["app/user/*"],
       "@user-list/*": ["app/user-list/*"],
-      "@environments/*": ["environments/*"]
+      "@environments/*": ["environments/*"],
+      "@models/*": ["app/models/*"]
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

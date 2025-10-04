@@ -15,14 +15,7 @@ import { WebsocketService } from '@services/websocket.service'
 import { Router } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { setCurrentUser } from '@store/store.actions'
-
-export interface UserModel {
-  id: number | string
-  name: any
-  role: any
-  email: any
-  protectedProjects: number
-}
+import { UserModel } from '@models/user.model'
 
 @Component({
   selector: 'app-user-list',

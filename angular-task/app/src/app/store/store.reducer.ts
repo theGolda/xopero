@@ -1,11 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { addUserToFavorite, removeUserFromFavorite, setCurrentUser } from './store.actions'
-import { UserModel } from '@user-list/user-list.component'
+import { UserModel } from '@models/user.model'
 
 export interface State {
-  userAmount: number
-  currentUser: UserModel
-  favoriteUsers: any
+  userAmount: number;
+  currentUser: UserModel;
+  favoriteUsers: any;
 }
 
 export const initialState: State = {
