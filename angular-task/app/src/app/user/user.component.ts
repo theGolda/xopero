@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { WebsocketService } from '../services/websocket.service'
+import { WebsocketService } from '@services/websocket.service'
 import { Router } from '@angular/router'
 import { combineLatest, Subscription, tap } from 'rxjs'
-import { userReducer } from 'app/store/store.reducer'
+import { userReducer } from '@store/store.reducer'
 import { Store } from '@ngrx/store'
-import { addUserToFavorite, removeUserFromFavorite, setCurrentUser } from 'app/store/store.actions'
-import { selectCurrentUser, selectFavoriteUsers } from 'app/store/store.selectors'
+import { addUserToFavorite, removeUserFromFavorite, setCurrentUser } from '@store/store.actions'
+import { selectCurrentUser, selectFavoriteUsers } from '@store/store.selectors'
 import { CommonModule } from '@angular/common'
 
 @Component({

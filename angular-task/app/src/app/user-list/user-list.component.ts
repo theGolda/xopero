@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { UserService } from '@services/user.service';
 import { Subscription } from 'rxjs';
 import {
   MatCell, MatCellDef,
@@ -10,10 +10,10 @@ import {
   MatRow, MatRowDef,
   MatTable, MatTableDataSource,
 } from '@angular/material/table'
-import { WebsocketService } from '../services/websocket.service'
+import { WebsocketService } from '@services/websocket.service'
 import { Router } from '@angular/router'
 import { Store } from '@ngrx/store'
-import { setCurrentUser } from '../store/store.actions'
+import { setCurrentUser } from '@store/store.actions'
 
 export interface UserModel {
   id: number | string

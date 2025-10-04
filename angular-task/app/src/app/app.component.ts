@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WebsocketService } from './services/websocket.service'
+import { WebsocketService } from '@services/websocket.service'
 import { Subscription } from 'rxjs'
 
 @Component({

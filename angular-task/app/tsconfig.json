@@ -6,6 +6,12 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     "baseUrl": "./src",
+    "paths": {
+      "@services/*": ["app/services/*"],
+      "@store/*": ["app/store/*"],
+      "@user/*": ["app/user/*"],
+      "@user-list/*": ["app/user-list/*"]
+    },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
