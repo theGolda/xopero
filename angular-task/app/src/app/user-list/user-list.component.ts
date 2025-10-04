@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '@services/user.service';
 import { Subscription } from 'rxjs';
+import { environment } from '@environments/environment';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -56,7 +57,7 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.loadUsers();
 
-    this.wsSub = this.websocketService.connect('ws://localhost:9334/notificationHub').subscribe(msg => {
+    this.wsSub = this.websocketService.connect(environment.websocketUrl).subscribe(msg => {
       console.log("New message:", msg);
     });
   }

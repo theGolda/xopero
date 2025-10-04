@@ -7,10 +7,12 @@
     "strict": true,
     "baseUrl": "./src",
     "paths": {
+      "@app/*": ["app/*"],
       "@services/*": ["app/services/*"],
       "@store/*": ["app/store/*"],
       "@user/*": ["app/user/*"],
-      "@user-list/*": ["app/user-list/*"]
+      "@user-list/*": ["app/user-list/*"],
+      "@environments/*": ["environments/*"]
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
