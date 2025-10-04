@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store'
 import { addUserToFavorite, removeUserFromFavorite, synchronizeUser } from '@store/store.actions'
 import { selectCurrentUser, selectFavoriteUsers } from '@store/store.selectors'
 import { CommonModule } from '@angular/common'
+import { UserModel } from '@models/user.model'
 
 @Component({
   selector: 'app-user',
@@ -14,21 +15,19 @@ import { CommonModule } from '@angular/common'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserComponent {
-  userName!: any
-  protectedProjects: any = 0
-  projectsSub!: Subscription
-  userId!: any
-  user: any
+  userName: string = '';
+  protectedProjects: number = 0;
+  projectsSub!: Subscription;
+  userId: string | number = '';
+  user: UserModel | null = null;
 
   user$ = this.store.select(selectCurrentUser).subscribe(user => {
-    //@ts-ignore
-    this.userName = user.name
-    //@ts-ignore
-    this.protectedProjects = user.protectedProjects
-    //@ts-ignore
-    this.userId = user.id
-    //@ts-ignore
-    this.user = user
+    if (user) {
+      this.userName = user.name || '';
+      this.protectedProjects = user.protectedProjects || 0;
+      this.userId = user.id;
+      this.user = user;
+    }
   })
 
   favoriteUsers$ = this.store.select(selectFavoriteUsers)
@@ -37,14 +36,14 @@ export class UserComponent {
   }
 
 
-  isUserFavorite(favoriteUsers: any) {
-    // @ts-ignore
-    return !!favoriteUsers.find(u => u.id === this.userId)
+  isUserFavorite(favoriteUsers: UserModel[] | null): boolean {
+    if (!favoriteUsers) return false;
+    return !!favoriteUsers.find(u => u.id === this.userId);
   }
 
-  isNotUserFavorite(favoriteUsers: any) {
-    // @ts-ignore
-    return !favoriteUsers.find(u => u.id === this.userId)
+  isNotUserFavorite(favoriteUsers: UserModel[] | null): boolean {
+    if (!favoriteUsers) return true;
+    return !favoriteUsers.find(u => u.id === this.userId);
   }
 
   goBack() {
@@ -56,11 +55,14 @@ export class UserComponent {
   }
 
   removeFromFavorites() {
-    this.store.dispatch(removeUserFromFavorite({ user: this.user }))
+    if (this.user) {
+      this.store.dispatch(removeUserFromFavorite({ user: this.user }));
+    }
   }
 
-  addToFavorites(){
-    this.store.dispatch(addUserToFavorite({user: this.user}))
-
+  addToFavorites() {
+    if (this.user) {
+      this.store.dispatch(addUserToFavorite({ user: this.user }));
+    }
   }
 }

@@ -12,8 +12,8 @@ import { UserModel } from '@models/user.model'
 
 export interface State {
   userAmount: number;
-  currentUser: UserModel;
-  favoriteUsers: any;
+  currentUser: UserModel | null;
+  favoriteUsers: UserModel[];
   users: UserModel[];
   loading: boolean;
   error: string | null;
@@ -21,7 +21,6 @@ export interface State {
 
 export const initialState: State = {
   userAmount: 0,
-  // @ts-ignore
   currentUser: null,
   favoriteUsers: [],
   users: [],
@@ -41,7 +40,6 @@ export const userReducer = createReducer(
   })),
   on(removeUserFromFavorite, (state, { user }) => ({
     ...state,
-    // @ts-ignore
     favoriteUsers: state.favoriteUsers.filter((u) => u.id !== user.id)
   })),
   on(loadUsers, (state) => ({
