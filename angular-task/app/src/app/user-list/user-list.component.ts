@@ -11,9 +11,9 @@ import {
   MatTable, MatTableDataSource,
 } from '@angular/material/table'
 import { WebsocketService } from '../services/websocket.service'
-import {Router} from '@angular/router'
-import {Store} from '@ngrx/store'
-import {setCurrentUser} from '../store/store.actions'
+import { Router } from '@angular/router'
+import { Store } from '@ngrx/store'
+import { setCurrentUser } from '../store/store.actions'
 
 export interface UserModel {
   id: number | string
