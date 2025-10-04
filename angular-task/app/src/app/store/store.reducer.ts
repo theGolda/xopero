@@ -6,7 +6,10 @@ import {
   loadUsers,
   loadUsersSuccess,
   loadUsersFailure,
-  userSynchronized
+  userSynchronized,
+  loadUser,
+  loadUserSuccess,
+  loadUserFailure
 } from './store.actions'
 import { UserModel } from '@models/user.model'
 
@@ -41,6 +44,23 @@ export const userReducer = createReducer(
   on(removeUserFromFavorite, (state, { user }) => ({
     ...state,
     favoriteUsers: state.favoriteUsers.filter((u) => u.id !== user.id)
+  })),
+  on(loadUser, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(loadUserSuccess, (state, { user }) => ({
+    ...state,
+    currentUser: user,
+    loading: false,
+    error: null,
+  })),
+  on(loadUserFailure, (state, { error }) => ({
+    ...state,
+    currentUser: null,
+    loading: false,
+    error,
   })),
   on(loadUsers, (state) => ({
     ...state,

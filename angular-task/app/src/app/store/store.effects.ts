@@ -12,7 +12,10 @@ import {
   loadUsersFailure,
   connectWebSocket,
   synchronizeUser,
-  userSynchronized
+  userSynchronized,
+  loadUser,
+  loadUserSuccess,
+  loadUserFailure
 } from './store.actions';
 
 @Injectable()
@@ -23,6 +26,18 @@ export class StoreEffects {
     private websocketService: WebsocketService,
     private store: Store
   ) {}
+
+  loadUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadUser),
+      switchMap(({ userId }) =>
+        this.userService.getUser(userId).pipe(
+          map(user => loadUserSuccess({ user })),
+          catchError(error => of(loadUserFailure({ error: error.message })))
+        )
+      )
+    )
+  );
 
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(

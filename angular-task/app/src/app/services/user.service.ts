@@ -22,7 +22,7 @@ export class UserService {
     return this.http.get<UsersApiResponse>(url).pipe(map((res: UsersApiResponse) => res.results));
   }
 
-  getUser(id: string): Observable<UserModel> {
+  getUser(id: number): Observable<UserModel> {
     return this.http.get<UserModel>(`${this.apiURL}/${id}`);
   }
 }

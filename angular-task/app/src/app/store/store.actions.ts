@@ -7,6 +7,10 @@ export const addUserToFavorite = createAction('[User] Add user to favorite', pro
 export const removeUserFromFavorite = createAction('[User] Remove user from favorite', props<{ user: UserModel }>());
 
 // User loading actions
+export const loadUser = createAction('[User] Load user', props<{ userId: number }>());
+export const loadUserSuccess = createAction('[User] Load user success', props<{ user: UserModel }>());
+export const loadUserFailure = createAction('[User] Load user failure', props<{ error: string }>());
+
 export const loadUsers = createAction('[User] Load users');
 export const loadUsersSuccess = createAction('[User] Load users success', props<{ users: UserModel[] }>());
 export const loadUsersFailure = createAction('[User] Load users failure', props<{ error: string }>());

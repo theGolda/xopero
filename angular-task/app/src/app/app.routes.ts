@@ -5,10 +5,15 @@ import { UserListComponent } from '@user-list/user-list.component';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'users',
+    pathMatch: 'full',
+  },
+  {
+    path: 'users',
     component: UserListComponent,
   },
   {
-    path: ':id',
+    path: 'users/:id',
     component: UserComponent,
   },
 ];

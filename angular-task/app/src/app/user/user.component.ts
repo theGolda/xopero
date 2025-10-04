@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { Router } from '@angular/router'
-import { Subscription } from 'rxjs'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ActivatedRoute, RouterModule } from '@angular/router'
 import { Store } from '@ngrx/store'
-import { addUserToFavorite, removeUserFromFavorite, synchronizeUser } from '@store/store.actions'
+import { addUserToFavorite, loadUser, removeUserFromFavorite, synchronizeUser } from '@store/store.actions'
 import { selectCurrentUser, selectFavoriteUsers } from '@store/store.selectors'
 import { CommonModule } from '@angular/common'
 import { UserModel } from '@models/user.model'
@@ -11,30 +10,21 @@ import { UserModel } from '@models/user.model'
   selector: 'app-user',
   templateUrl: 'user.component.html',
   styleUrls: ['user.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserComponent {
-  userName: string = '';
-  protectedProjects: number = 0;
-  projectsSub!: Subscription;
-  userId: string | number = '';
-  user: UserModel | null = null;
-
-  user$ = this.store.select(selectCurrentUser).subscribe(user => {
-    if (user) {
-      this.userName = user.name || '';
-      this.protectedProjects = user.protectedProjects || 0;
-      this.userId = user.id;
-      this.user = user;
-    }
-  })
+export class UserComponent implements OnInit {
+  user$ = this.store.select(selectCurrentUser)
 
   favoriteUsers$ = this.store.select(selectFavoriteUsers)
+  userId: number = this.activatedRoute.snapshot.params['id'];
 
-  constructor(public router: Router, public store: Store) {
+  constructor(public activatedRoute: ActivatedRoute, public store: Store) {
   }
 
+  ngOnInit(): void {
+    this.store.dispatch(loadUser({ userId: this.userId }));
+  }
 
   isUserFavorite(favoriteUsers: UserModel[] | null): boolean {
     if (!favoriteUsers) return false;
@@ -46,23 +36,15 @@ export class UserComponent {
     return !favoriteUsers.find(u => u.id === this.userId);
   }
 
-  goBack() {
-    this.router.navigate([])
+  synchronizeUser(userName: string) {
+    this.store.dispatch(synchronizeUser({ userName }));
   }
 
-  synchronizeUser() {
-    this.store.dispatch(synchronizeUser({ userName: this.userName }));
+  removeFromFavorites(user: UserModel) {
+    this.store.dispatch(removeUserFromFavorite({ user }));
   }
 
-  removeFromFavorites() {
-    if (this.user) {
-      this.store.dispatch(removeUserFromFavorite({ user: this.user }));
-    }
-  }
-
-  addToFavorites() {
-    if (this.user) {
-      this.store.dispatch(addUserToFavorite({ user: this.user }));
-    }
+  addToFavorites(user: UserModel) {
+    this.store.dispatch(addUserToFavorite({ user }));
   }
 }
