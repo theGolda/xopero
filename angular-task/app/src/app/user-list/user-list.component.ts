@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '@services/user.service';
-import { Subscription } from 'rxjs';
-import { environment } from '@environments/environment';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -9,12 +8,12 @@ import {
   MatHeaderCellDef,
   MatHeaderRow, MatHeaderRowDef,
   MatRow, MatRowDef,
-  MatTable, MatTableDataSource,
+  MatTable,
 } from '@angular/material/table'
-import { WebsocketService } from '@services/websocket.service'
 import { Router } from '@angular/router'
 import { Store } from '@ngrx/store'
-import { setCurrentUser } from '@store/store.actions'
+import { setCurrentUser, loadUsers, connectWebSocket } from '@store/store.actions'
+import { selectUsers } from '@store/store.selectors'
 import { UserModel } from '@models/user.model'
 
 @Component({
@@ -22,6 +21,7 @@ import { UserModel } from '@models/user.model'
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
   imports: [
+    CommonModule,
     MatTable,
     MatColumnDef,
     MatHeaderCell,
@@ -35,30 +35,16 @@ import { UserModel } from '@models/user.model'
   ],
 })
 export class UserListComponent implements OnInit {
-  users: any
-
-  private userSub!: Subscription;
-  private wsSub!: Subscription;
+  users$: Observable<UserModel[]> = this.store.select(selectUsers);;
 
   constructor(
-    public userService: UserService,
-    public websocketService: WebsocketService,
     public router: Router,
     public store: Store,
   ) { }
 
   ngOnInit(): void {
-    this.loadUsers();
-
-    this.wsSub = this.websocketService.connect(environment.websocketUrl).subscribe(msg => {
-      console.log("New message:", msg);
-    });
-  }
-
-  loadUsers() {
-    this.userSub = this.userService.getUsers().subscribe(data => {
-      this.users = new MatTableDataSource(data);
-    });
+    this.store.dispatch(loadUsers());
+    this.store.dispatch(connectWebSocket());
   }
 
   userDetails(user: UserModel) {

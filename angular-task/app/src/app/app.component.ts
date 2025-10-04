@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WebsocketService } from '@services/websocket.service'
-import { Subscription } from 'rxjs'
-import { environment } from '@environments/environment';
+import { Store } from '@ngrx/store';
+import { connectWebSocket } from '@store/store.actions';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +11,11 @@ import { environment } from '@environments/environment';
 })
 export class AppComponent {
   title = 'app';
-  private wsSub!: Subscription;
 
-  constructor(private websocketService: WebsocketService) {
+  constructor(private store: Store) {
   }
 
   ngOnInit() {
-    this.wsSub = this.websocketService.connect(environment.websocketUrl).subscribe(msg => {
-      console.log("New message:", msg);
-    });
+    this.store.dispatch(connectWebSocket());
   }
 }

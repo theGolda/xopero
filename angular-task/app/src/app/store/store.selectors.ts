@@ -13,3 +13,18 @@ export const selectFavoriteUsers = createSelector(
   (state) => state.favoriteUsers
 );
 
+export const selectUsers = createSelector(
+  selectCounterState,
+  (state) => state.users
+);
+
+export const selectLoading = createSelector(
+  selectCounterState,
+  (state) => state.loading
+);
+
+export const selectError = createSelector(
+  selectCounterState,
+  (state) => state.error
+);
+

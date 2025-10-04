@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { WebsocketService } from '@services/websocket.service'
 import { Router } from '@angular/router'
-import { combineLatest, Subscription, tap } from 'rxjs'
-import { userReducer } from '@store/store.reducer'
+import { Subscription } from 'rxjs'
 import { Store } from '@ngrx/store'
-import { addUserToFavorite, removeUserFromFavorite, setCurrentUser } from '@store/store.actions'
+import { addUserToFavorite, removeUserFromFavorite, synchronizeUser } from '@store/store.actions'
 import { selectCurrentUser, selectFavoriteUsers } from '@store/store.selectors'
 import { CommonModule } from '@angular/common'
 
@@ -35,19 +33,9 @@ export class UserComponent {
 
   favoriteUsers$ = this.store.select(selectFavoriteUsers)
 
-  constructor(public webSocketService: WebsocketService, public router: Router, public store: Store) {
+  constructor(public router: Router, public store: Store) {
   }
 
-  ngOnInit() {
-    this.webSocketService.subject.subscribe(msg => {
-      const response = JSON.parse(msg)
-
-      const user = response.payload
-      console.error('Failed to load user: ', user.id)
-
-      this.store.dispatch(setCurrentUser({user}))
-    })
-  }
 
   isUserFavorite(favoriteUsers: any) {
     // @ts-ignore
@@ -64,12 +52,7 @@ export class UserComponent {
   }
 
   synchronizeUser() {
-    console.log('starting synchronization')
-    const message = JSON.stringify({
-      type: 'SynchronizeUser',
-      payload: this.userName,
-    })
-    this.webSocketService.sendMessage(message)
+    this.store.dispatch(synchronizeUser({ userName: this.userName }));
   }
 
   removeFromFavorites() {
