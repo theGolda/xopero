@@ -1,4 +1,12 @@
 <div>
+  <form [formGroup]="searchForm">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search users</mat-label>
+      <input matInput formControlName="searchText" placeholder="Search phrase">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </form>
+
   <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
@@ -20,6 +28,9 @@
 
     <tr mat-header-row *matHeaderRowDef="['name', 'role', 'protectedProjects']"></tr>
     <tr mat-row *matRowDef="let row; columns: ['name', 'role', 'protectedProjects'];"></tr>
+    <tr *matNoDataRow>
+      <td colspan="3">No data matching the filter "{{searchForm.get('searchText')?.value}}"</td>
+    </tr>
 
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
