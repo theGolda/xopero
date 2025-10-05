@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UserService } from '@services/user.service';
 import { WebsocketService } from '@services/websocket.service';
 import { environment } from '@environments/environment';
-import { 
-  loadUsers, 
-  loadUsersSuccess, 
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  loadUsers,
+  loadUsersSuccess,
   loadUsersFailure,
   connectWebSocket,
   synchronizeUser,
-  userSynchronized,
   loadUser,
   loadUserSuccess,
   loadUserFailure
@@ -24,8 +23,8 @@ export class StoreEffects {
     private actions$: Actions,
     private userService: UserService,
     private websocketService: WebsocketService,
-    private store: Store
-  ) {}
+    private snackBar: MatSnackBar,
+  ) { }
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
@@ -56,11 +55,14 @@ export class StoreEffects {
       ofType(connectWebSocket),
       tap(() => {
         this.websocketService.connect(environment.websocketUrl).subscribe(msg => {
-          console.log("New message:", msg);
           try {
             const response = JSON.parse(msg);
             if (response.payload) {
-              this.store.dispatch(userSynchronized({ user: response.payload }));
+              if (response.type === 'ReceiveMessage') {
+                this.snackBar.open(new Date(Number(response.payload)).toLocaleString(), '', {
+                  duration: 2000
+                });
+              }
             }
           } catch (error) {
             console.error('Error parsing WebSocket message:', error);

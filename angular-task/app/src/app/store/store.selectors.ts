@@ -1,30 +1,30 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { State } from './store.reducer'
 
-export const selectCounterState = createFeatureSelector<State>('user');
+export const selectUserState = createFeatureSelector<State>('user');
 
 export const selectCurrentUser = createSelector(
-  selectCounterState,
+  selectUserState,
   (state) => state.currentUser
 );
 
 export const selectFavoriteUsers = createSelector(
-  selectCounterState,
+  selectUserState,
   (state) => state.favoriteUsers
 );
 
 export const selectUsers = createSelector(
-  selectCounterState,
+  selectUserState,
   (state) => state.users
 );
 
 export const selectLoading = createSelector(
-  selectCounterState,
+  selectUserState,
   (state) => state.loading
 );
 
 export const selectError = createSelector(
-  selectCounterState,
+  selectUserState,
   (state) => state.error
 );
 
