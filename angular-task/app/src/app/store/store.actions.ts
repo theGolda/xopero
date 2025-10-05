@@ -17,5 +17,5 @@ export const loadUsersFailure = createAction('[User] Load users failure', props<
 
 // WebSocket actions
 export const connectWebSocket = createAction('[User] Connect WebSocket');
-export const synchronizeUser = createAction('[User] Synchronize user', props<{ userName: string }>());
+export const synchronizeUser = createAction('[User] Synchronize user', props<{ id: number }>());
 export const userSynchronized = createAction('[User] User synchronized', props<{ user: UserModel }>());

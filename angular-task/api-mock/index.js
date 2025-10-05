@@ -32,15 +32,18 @@ wss.on('connection', (ws) => {
     const msg = JSON.parse(res)
     console.log(msg)
     if (msg.type === 'SynchronizeUser' && msg.payload >= 0) {
-      MOCK_USERS[msg.payload] = {
-        ...MOCK_USERS[msg.payload],
-        protectedProjects: MOCK_USERS[msg.payload].protectedProjects + Math.floor(Math.random() * 10)
-      }
+      const user = MOCK_USERS.find(user => user.id === msg.payload);
+      
+      if (user) {
+        user.protectedProjects += Math.floor(Math.random() * 10);
 
-      ws.send(JSON.stringify({
-        type: 'SynchronizeUserFinished',
-        payload: MOCK_USERS[msg.payload]
-      }))
+        ws.send(JSON.stringify({
+          type: 'SynchronizeUserFinished',
+          payload: user
+        }))
+      } else {
+        console.log(`User with ID ${msg.payload} not found`);
+      }
     }
     console.log(`Received from client: ${msg}`);
   });

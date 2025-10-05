@@ -38,8 +38,8 @@ export class UserComponent implements OnInit {
     return !favoriteUsers.find(u => u.id === this.userId);
   }
 
-  synchronizeUser(userName: string) {
-    this.store.dispatch(synchronizeUser({ userName }));
+  synchronizeUser(id: number) {
+    this.store.dispatch(synchronizeUser({ id }));
   }
 
   removeFromFavorites(user: UserModel) {

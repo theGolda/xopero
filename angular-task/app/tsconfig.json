@@ -13,7 +13,8 @@
       "@user/*": ["app/user/*"],
       "@user-list/*": ["app/user-list/*"],
       "@environments/*": ["environments/*"],
-      "@models/*": ["app/models/*"]
+      "@models/*": ["app/models/*"],
+      "@handlers/*": ["app/handlers/*"],
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
