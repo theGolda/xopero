@@ -7,12 +7,14 @@ import { CommonModule } from '@angular/common'
 import { UserModel } from '@models/user.model'
 import { Observable } from 'rxjs'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatButtonModule } from '@angular/material/button'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-user',
   templateUrl: 'user.component.html',
   styleUrls: ['user.component.scss'],
-  imports: [CommonModule, RouterModule, MatSlideToggleModule],
+  imports: [CommonModule, RouterModule, MatSlideToggleModule, MatButtonModule, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserComponent implements OnInit {

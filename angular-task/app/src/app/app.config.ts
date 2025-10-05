@@ -8,6 +8,10 @@ import { userReducer } from '@store/store.reducer';
 import { provideStoreDevtools } from '@ngrx/store-devtools'
 import { provideEffects } from '@ngrx/effects'
 import { StoreEffects } from '@store/store.effects'
+import { TranslateModule, TranslateLoader, provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +20,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore({ user: userReducer }),
     provideEffects(StoreEffects),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({prefix:"assets/i18n/"}),
+      fallbackLang: 'en',
+      lang: 'pl'
+  })
 ]
 };

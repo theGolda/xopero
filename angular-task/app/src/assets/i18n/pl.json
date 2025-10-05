@@ -1,0 +1,33 @@
+{
+  "app": {
+    "title": "System Zarządzania Użytkownikami",
+    "language": "Język",
+    "english": "Angielski",
+    "polish": "Polski"
+  },
+  "navigation": {
+    "goBack": "Wróć do listy",
+    "users": "Użytkownicy"
+  },
+  "user": {
+    "username": "Nazwa użytkownika",
+    "protectedProjects": "Chronione projekty",
+    "synchronize": "Synchronizuj",
+    "favorite": "Ulubiony",
+    "noUserFound": "Nie znaleziono użytkownika"
+  },
+  "userList": {
+    "searchUsers": "Szukaj użytkowników",
+    "searchPlaceholder": "Fraza wyszukiwania",
+    "name": "Nazwa",
+    "role": "Rola",
+    "protectedProjects": "Chronione projekty",
+    "favorite": "Ulubiony",
+    "noDataFound": "Brak danych pasujących do filtra \"{{filter}}\""
+  },
+  "common": {
+    "loading": "Ładowanie...",
+    "error": "Wystąpił błąd"
+  }
+}
+

@@ -1,0 +1,33 @@
+{
+  "app": {
+    "title": "User Management System",
+    "language": "Language",
+    "english": "English",
+    "polish": "Polish"
+  },
+  "navigation": {
+    "goBack": "Go back to list",
+    "users": "Users"
+  },
+  "user": {
+    "username": "Username",
+    "protectedProjects": "Protected projects",
+    "synchronize": "Synchronize",
+    "favorite": "Favorite",
+    "noUserFound": "No user found"
+  },
+  "userList": {
+    "searchUsers": "Search users",
+    "searchPlaceholder": "Search phrase",
+    "name": "Name",
+    "role": "Role",
+    "protectedProjects": "Protected projects",
+    "favorite": "Favorite",
+    "noDataFound": "No data matching the filter \"{{filter}}\""
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error occurred"
+  }
+}
+

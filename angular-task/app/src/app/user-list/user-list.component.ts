@@ -23,6 +23,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-list',
@@ -47,14 +48,14 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatTableModule
+    MatTableModule,
+    TranslateModule
   ],
 })
 export class UserListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<UserModel>();
   users$: Observable<UserModel[]> = this.store.select(selectUsers);
   
-  // Reactive form for filtering
   searchForm: FormGroup;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -78,7 +79,6 @@ export class UserListComponent implements OnInit, AfterViewInit {
       })
     ).subscribe();
 
-    // Subscribe to form changes for real-time filtering
     this.searchForm.valueChanges.subscribe(() => {
       this.applyFilter();
     });
