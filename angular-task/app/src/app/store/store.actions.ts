@@ -1,5 +1,6 @@
-import { createAction, props } from '@ngrx/store'
-import { UserModel } from '@models/user.model'
+import { createAction, props } from '@ngrx/store';
+
+import { UserModel } from '@models/user.model';
 
 // User management actions
 export const setCurrentUser = createAction('[User] Set current user', props<{ user: UserModel }>());

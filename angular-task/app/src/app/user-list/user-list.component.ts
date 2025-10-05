@@ -2,28 +2,19 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import {
-  MatCell, MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
-  MatTable,
-  MatTableDataSource,
-  MatTableModule,
-} from '@angular/material/table'
-import { RouterModule } from '@angular/router'
-import { Store } from '@ngrx/store'
-import { loadUsers } from '@store/store.actions'
-import { selectUsers } from '@store/store.selectors'
-import { UserModel } from '@models/user.model'
+import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
+
+import { loadUsers } from '@store/store.actions';
+import { selectUsers } from '@store/store.selectors';
+import { UserModel } from '@models/user.model';
 
 @Component({
   selector: 'app-user-list',
@@ -32,46 +23,36 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCell,
-    MatCell,
-    MatHeaderRow,
-    MatRow,
-    MatHeaderCellDef,
-    MatCellDef,
-    MatHeaderRowDef,
-    MatRowDef,
     RouterModule,
+    MatTable,
+    MatTableModule,
     MatPaginator,
     MatSortModule,
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatTableModule,
     TranslateModule
   ],
 })
 export class UserListComponent implements OnInit, AfterViewInit {
-  dataSource = new MatTableDataSource<UserModel>();
-  users$: Observable<UserModel[]> = this.store.select(selectUsers);
-  
-  searchForm: FormGroup;
+  public dataSource = new MatTableDataSource<UserModel>();
+  public users$: Observable<UserModel[]> = this._store.select(selectUsers);
+  public searchForm: FormGroup;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) public paginator!: MatPaginator;
+  @ViewChild(MatSort) public sort!: MatSort;
 
   constructor(
-    public store: Store,
-    private fb: FormBuilder
+    private _store: Store,
+    private _fb: FormBuilder
   ) {
-    this.searchForm = this.fb.group({
+    this.searchForm = this._fb.group({
       searchText: ['']
     });
   }
 
-  ngOnInit(): void {
-    this.store.dispatch(loadUsers());
+  public ngOnInit(): void {
+    this._store.dispatch(loadUsers());
     this.users$.pipe(
       tap(users => {
         this.dataSource.data = users;
@@ -84,12 +65,12 @@ export class UserListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  setupFiltering(): void {
+  private setupFiltering(): void {
     this.dataSource.filterPredicate = (data: UserModel, filter: string) => {
       const searchText = this.searchForm.get('searchText')?.value?.toLowerCase() || '';
       
@@ -104,9 +85,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
     };
   }
 
-  applyFilter(): void {
+  private applyFilter(): void {
     const searchText = this.searchForm.get('searchText')?.value || '';
     this.dataSource.filter = searchText.trim().toLowerCase();
   }
-
 }
