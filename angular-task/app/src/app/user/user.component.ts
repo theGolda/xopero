@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { addUserToFavorite, loadUser, removeUserFromFavorite, synchronizeUser } from '@store/store.actions'
-import { selectCurrentUser, selectFavoriteUsers } from '@store/store.selectors'
+import { selectCurrentUser, selectFavoriteUsers, selectLoading } from '@store/store.selectors'
 import { CommonModule } from '@angular/common'
 import { UserModel } from '@models/user.model'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-user',
@@ -18,6 +19,7 @@ export class UserComponent implements OnInit {
 
   favoriteUsers$ = this.store.select(selectFavoriteUsers)
   userId: number = this.activatedRoute.snapshot.params['id'];
+  loading$: Observable<boolean> = this.store.select(selectLoading);
 
   constructor(public activatedRoute: ActivatedRoute, public store: Store) {
   }
