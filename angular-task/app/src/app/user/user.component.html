@@ -1,0 +1,17 @@
+<ng-container *ngIf="user$ | async as user; else noUser">
+  <div class="user">
+    <h3>Username: {{user.name}}</h3>
+    <h4>Protected projects: {{user.protectedProjects}}</h4>
+    <div class="buttons">
+      <button (click)="synchronizeUser(user.name)">Synchronize</button>
+      <button *ngIf="isUserFavorite(favoriteUsers$ | async)" (click)="removeFromFavorites(user)">Remove from
+        favorites</button>
+      <button *ngIf="isNotUserFavorite(favoriteUsers$ | async)" (click)="addToFavorites(user)">Add to favorites</button>
+    </div>
+  </div>
+</ng-container>
+<ng-template #noUser>
+  <p>No user found</p>
+</ng-template>
+
+<button [routerLink]="['/users']" class="go-back">Go back to list</button>
