@@ -28,6 +28,14 @@
   "common": {
     "loading": "Loading...",
     "error": "Error occurred"
+  },
+  "paginator": {
+    "itemsPerPageLabel": "Items per page:",
+    "nextPageLabel": "Next page",
+    "previousPageLabel": "Previous page",
+    "firstPageLabel": "First page",
+    "lastPageLabel": "Last page",
+    "getRangeLabel": "{{start}} - {{end}} of {{total}}"
   }
 }
 

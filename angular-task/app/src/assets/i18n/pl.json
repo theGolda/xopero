@@ -28,6 +28,14 @@
   "common": {
     "loading": "Ładowanie...",
     "error": "Wystąpił błąd"
+  },
+  "paginator": {
+    "itemsPerPageLabel": "Elementów na stronę:",
+    "nextPageLabel": "Następna strona",
+    "previousPageLabel": "Poprzednia strona",
+    "firstPageLabel": "Pierwsza strona",
+    "lastPageLabel": "Ostatnia strona",
+    "getRangeLabel": "{{start}} - {{end}} z {{total}}"
   }
 }
 

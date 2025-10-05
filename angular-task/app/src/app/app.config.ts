@@ -11,7 +11,8 @@ import { StoreEffects } from '@store/store.effects'
 import { TranslateModule, TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomMatPaginatorIntl } from '@services/custom-mat-paginator/custom-mat-paginator-intl.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +26,10 @@ export const appConfig: ApplicationConfig = {
       loader: provideTranslateHttpLoader({prefix:"assets/i18n/"}),
       fallbackLang: 'en',
       lang: 'pl'
-  })
+  }),
+  {
+    provide: MatPaginatorIntl,
+    useClass: CustomMatPaginatorIntl
+  }
 ]
 };
