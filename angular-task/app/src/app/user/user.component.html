@@ -5,10 +5,11 @@
       <h4>Protected projects: {{user.protectedProjects}}</h4>
       <div class="buttons">
         <button (click)="synchronizeUser(user.id)">Synchronize</button>
-        <button *ngIf="isUserFavorite(favoriteUsers$ | async)" (click)="removeFromFavorites(user)">Remove from
-          favorites</button>
-        <button *ngIf="isNotUserFavorite(favoriteUsers$ | async)" (click)="addToFavorites(user)">Add to
-          favorites</button>
+        <mat-slide-toggle
+          [checked]="isUserFavorite(favoriteUsers$ | async)"
+          (change)="toggleFavorite(user, $event.checked)" color="primary">
+          Favorite
+        </mat-slide-toggle>
       </div>
     </div>
   </ng-container>

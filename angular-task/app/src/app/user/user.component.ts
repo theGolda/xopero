@@ -6,12 +6,13 @@ import { selectCurrentUser, selectFavoriteUsers, selectLoading } from '@store/st
 import { CommonModule } from '@angular/common'
 import { UserModel } from '@models/user.model'
 import { Observable } from 'rxjs'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 @Component({
   selector: 'app-user',
   templateUrl: 'user.component.html',
   styleUrls: ['user.component.scss'],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatSlideToggleModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserComponent implements OnInit {
@@ -33,20 +34,15 @@ export class UserComponent implements OnInit {
     return !!favoriteUsers.find(u => u.id === this.userId);
   }
 
-  isNotUserFavorite(favoriteUsers: UserModel[] | null): boolean {
-    if (!favoriteUsers) return true;
-    return !favoriteUsers.find(u => u.id === this.userId);
-  }
-
   synchronizeUser(id: number) {
     this.store.dispatch(synchronizeUser({ id }));
   }
 
-  removeFromFavorites(user: UserModel) {
-    this.store.dispatch(removeUserFromFavorite({ user }));
-  }
-
-  addToFavorites(user: UserModel) {
-    this.store.dispatch(addUserToFavorite({ user }));
+  toggleFavorite(user: UserModel, isFavorite: boolean) {
+    if (isFavorite) {
+      this.store.dispatch(addUserToFavorite({ user }));
+    } else {
+      this.store.dispatch(removeUserFromFavorite({ user }));
+    }
   }
 }

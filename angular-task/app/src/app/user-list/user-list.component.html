@@ -26,10 +26,20 @@
       <td mat-cell *matCellDef="let user"> {{user.protectedProjects}} </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['name', 'role', 'protectedProjects']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['name', 'role', 'protectedProjects'];"></tr>
+    <ng-container matColumnDef="favorite">
+      <th mat-header-cell *matHeaderCellDef> Favorite </th>
+      <td mat-cell *matCellDef="let user">
+        <mat-icon 
+          [color]="isUserFavorite(user.id, favoriteUsers$ | async) ? 'primary' : 'disabled'">
+          {{isUserFavorite(user.id, favoriteUsers$ | async) ? 'favorite' : 'favorite_border'}}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name', 'role', 'protectedProjects', 'favorite']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'role', 'protectedProjects', 'favorite'];"></tr>
     <tr *matNoDataRow>
-      <td colspan="3">No data matching the filter "{{searchForm.get('searchText')?.value}}"</td>
+      <td colspan="4">No data matching the filter "{{searchForm.get('searchText')?.value}}"</td>
     </tr>
 
   </table>
