@@ -8,10 +8,6 @@ export const selectCurrentUser = createSelector(
   (state) => state.currentUser
 );
 
-export const selectFavoriteUsers = createSelector(
-  selectUserState,
-  (state) => state.favoriteUsers
-);
 
 export const selectUsers = createSelector(
   selectUserState,

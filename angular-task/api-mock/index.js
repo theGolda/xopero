@@ -69,7 +69,8 @@ const MOCK_USERS = Array.from({ length: MAX_USER_AMOUNT }).map((_, idx) => ({
   name: `User${idx + 1}`,
   role: idx % 2 === 0 ? 'Admin' : 'User',
   email: `user${idx + 1}@example.com`,
-  protectedProjects: Math.floor(Math.random() * 50)
+  protectedProjects: Math.floor(Math.random() * 50),
+  isFavorite: false
 }));
 
 restApp.get('/users', (req, res) => {
@@ -121,6 +122,17 @@ restApp.get('/users', (req, res) => {
 restApp.get('/users/:id', (req, res) => {
   const user = MOCK_USERS.find(u => u.id === Number(req.params.id));
   if (!user) return res.status(404).json({});
+  res.json(user);
+});
+
+restApp.put('/users/:id/favorite', (req, res) => {
+  const userId = Number(req.params.id);
+  const { isFavorite } = req.body;
+  
+  const user = MOCK_USERS.find(u => u.id === userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  
+  user.isFavorite = isFavorite;
   res.json(user);
 });
 

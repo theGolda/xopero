@@ -16,7 +16,7 @@ import {
 import { RouterModule } from '@angular/router'
 import { Store } from '@ngrx/store'
 import { loadUsers } from '@store/store.actions'
-import { selectUsers, selectFavoriteUsers } from '@store/store.selectors'
+import { selectUsers } from '@store/store.selectors'
 import { UserModel } from '@models/user.model'
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -53,7 +53,6 @@ import { MatIconModule } from '@angular/material/icon';
 export class UserListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<UserModel>();
   users$: Observable<UserModel[]> = this.store.select(selectUsers);
-  favoriteUsers$: Observable<UserModel[]> = this.store.select(selectFavoriteUsers);
   
   // Reactive form for filtering
   searchForm: FormGroup;
@@ -110,8 +109,4 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = searchText.trim().toLowerCase();
   }
 
-  isUserFavorite(userId: number, favoriteUsers: UserModel[] | null): boolean {
-    if (!favoriteUsers) return false;
-    return !!favoriteUsers.find(u => u.id === userId);
-  }
 }

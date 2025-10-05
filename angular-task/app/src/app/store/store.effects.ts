@@ -14,7 +14,10 @@ import {
   synchronizeUser,
   loadUser,
   loadUserSuccess,
-  loadUserFailure
+  loadUserFailure,
+  toggleUserFavorite,
+  toggleUserFavoriteSuccess,
+  toggleUserFavoriteFailure
 } from './store.actions';
 
 @Injectable()
@@ -69,5 +72,17 @@ export class StoreEffects {
         return of({ type: '[WebSocket] Synchronize message sent' });
       })
     ), { dispatch: false }
+  );
+
+  toggleUserFavorite$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(toggleUserFavorite),
+      switchMap(({ userId, isFavorite }) =>
+        this.userService.updateUserFavorite(userId, isFavorite).pipe(
+          map(user => toggleUserFavoriteSuccess({ user })),
+          catchError(error => of(toggleUserFavoriteFailure({ error: error.message })))
+        )
+      )
+    )
   );
 }

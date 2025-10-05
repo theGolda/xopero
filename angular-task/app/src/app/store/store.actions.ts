@@ -3,8 +3,9 @@ import { UserModel } from '@models/user.model'
 
 // User management actions
 export const setCurrentUser = createAction('[User] Set current user', props<{ user: UserModel }>());
-export const addUserToFavorite = createAction('[User] Add user to favorite', props<{ user: UserModel }>());
-export const removeUserFromFavorite = createAction('[User] Remove user from favorite', props<{ user: UserModel }>());
+export const toggleUserFavorite = createAction('[User] Toggle user favorite', props<{ userId: number, isFavorite: boolean }>());
+export const toggleUserFavoriteSuccess = createAction('[User] Toggle user favorite success', props<{ user: UserModel }>());
+export const toggleUserFavoriteFailure = createAction('[User] Toggle user favorite failure', props<{ error: string }>());
 
 // User loading actions
 export const loadUser = createAction('[User] Load user', props<{ userId: number }>());

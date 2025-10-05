@@ -4,4 +4,5 @@ export interface UserModel {
   role: string;
   email: string;
   protectedProjects: number;
+  isFavorite: boolean;
 }

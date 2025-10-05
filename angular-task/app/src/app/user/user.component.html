@@ -6,7 +6,7 @@
       <div class="buttons">
         <button (click)="synchronizeUser(user.id)">Synchronize</button>
         <mat-slide-toggle
-          [checked]="isUserFavorite(favoriteUsers$ | async)"
+          [checked]="user.isFavorite"
           (change)="toggleFavorite(user, $event.checked)" color="primary">
           Favorite
         </mat-slide-toggle>
