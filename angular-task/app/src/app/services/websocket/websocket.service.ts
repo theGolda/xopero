@@ -1,8 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { WebSocketMessage } from './websocket-message.interface';
-import { WebSocketMessageTypes } from './websocket-message-types';
-import { ReceiveMessageHandler, SynchronizeUserFinishedHandler } from '@handlers/index';
+import { WebSocketHandlerRegistry } from './websocket-handler-registry.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +9,11 @@ import { ReceiveMessageHandler, SynchronizeUserFinishedHandler } from '@handlers
 export class WebsocketService {
   private socket!: WebSocket;
   private messageSubject = new Subject<WebSocketMessage>();
-  private handlers: Map<string, any> = new Map();
 
   constructor(
     private ngZone: NgZone,
-    private receiveMessageHandler: ReceiveMessageHandler,
-    private synchronizeUserFinishedHandler: SynchronizeUserFinishedHandler
-  ) {
-    this.initializeHandlers();
-  }
-
-  private initializeHandlers(): void {
-    this.handlers.set(WebSocketMessageTypes.RECEIVE_MESSAGE, this.receiveMessageHandler);
-    this.handlers.set(WebSocketMessageTypes.SYNCHRONIZE_USER_FINISHED, this.synchronizeUserFinishedHandler);
-  }
+    private handlerRegistry: WebSocketHandlerRegistry
+  ) {}
 
   public connect(url: string): Observable<WebSocketMessage> {
     this.socket = new WebSocket(url);
@@ -66,7 +56,7 @@ export class WebsocketService {
   }
 
   private handleMessage(message: WebSocketMessage): void {
-    const handler = this.handlers.get(message.type);
+    const handler = this.handlerRegistry.getHandler(message.type);
     if (handler) {
       handler.handle(message);
     } else {
