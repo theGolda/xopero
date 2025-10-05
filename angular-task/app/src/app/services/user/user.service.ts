@@ -25,4 +25,8 @@ export class UserService {
   getUser(id: number): Observable<UserModel> {
     return this.http.get<UserModel>(`${this.apiURL}/${id}`);
   }
+
+  updateUserFavorite(id: number, isFavorite: boolean): Observable<UserModel> {
+    return this.http.put<UserModel>(`${this.apiURL}/${id}/favorite`, { isFavorite });
+  }
 }

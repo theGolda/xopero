@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { connectWebSocket } from '@store/store.actions';
+import { ReceiveMessageHandler, SynchronizeUserFinishedHandler } from './handlers/index';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,11 @@ import { connectWebSocket } from '@store/store.actions';
 export class AppComponent {
   title = 'app';
 
-  constructor(private store: Store) {
+  constructor(
+    private store: Store,
+    private receiveMessageHandler: ReceiveMessageHandler,
+    private synchronizeUserFinishedHandler: SynchronizeUserFinishedHandler
+  ) {
   }
 
   ngOnInit() {

@@ -1,8 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import { 
-  addUserToFavorite, 
-  removeUserFromFavorite, 
   setCurrentUser,
+  toggleUserFavorite,
+  toggleUserFavoriteSuccess,
+  toggleUserFavoriteFailure,
   loadUsers,
   loadUsersSuccess,
   loadUsersFailure,
@@ -16,7 +17,6 @@ import { UserModel } from '@models/user.model'
 export interface State {
   userAmount: number;
   currentUser: UserModel | null;
-  favoriteUsers: UserModel[];
   users: UserModel[];
   loading: boolean;
   error: string | null;
@@ -25,7 +25,6 @@ export interface State {
 export const initialState: State = {
   userAmount: 0,
   currentUser: null,
-  favoriteUsers: [],
   users: [],
   loading: false,
   error: null,
@@ -37,13 +36,14 @@ export const userReducer = createReducer(
     ...state,
     currentUser: user,
   })),
-  on(addUserToFavorite, (state, { user }) => ({
+  on(toggleUserFavoriteSuccess, (state, { user }) => ({
     ...state,
-    favoriteUsers: [...state.favoriteUsers, user]
+    users: state.users.map(u => u.id === user.id ? user : u),
+    currentUser: state.currentUser?.id === user.id ? user : state.currentUser,
   })),
-  on(removeUserFromFavorite, (state, { user }) => ({
+  on(toggleUserFavoriteFailure, (state, { error }) => ({
     ...state,
-    favoriteUsers: state.favoriteUsers.filter((u) => u.id !== user.id)
+    error,
   })),
   on(loadUser, (state) => ({
     ...state,

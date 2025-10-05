@@ -108,4 +108,5 @@ export class UserListComponent implements OnInit, AfterViewInit {
     const searchText = this.searchForm.get('searchText')?.value || '';
     this.dataSource.filter = searchText.trim().toLowerCase();
   }
+
 }

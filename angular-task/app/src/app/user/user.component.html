@@ -4,11 +4,12 @@
       <h3>Username: {{user.name}}</h3>
       <h4>Protected projects: {{user.protectedProjects}}</h4>
       <div class="buttons">
-        <button (click)="synchronizeUser(user.name)">Synchronize</button>
-        <button *ngIf="isUserFavorite(favoriteUsers$ | async)" (click)="removeFromFavorites(user)">Remove from
-          favorites</button>
-        <button *ngIf="isNotUserFavorite(favoriteUsers$ | async)" (click)="addToFavorites(user)">Add to
-          favorites</button>
+        <button (click)="synchronizeUser(user.id)">Synchronize</button>
+        <mat-slide-toggle
+          [checked]="user.isFavorite"
+          (change)="toggleFavorite(user, $event.checked)" color="primary">
+          Favorite
+        </mat-slide-toggle>
       </div>
     </div>
   </ng-container>

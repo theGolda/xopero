@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { UserService } from '@services/user.service';
-import { WebsocketService } from '@services/websocket.service';
+import { UserService } from '@services/user/user.service';
+import { WebsocketService } from '@services/websocket/websocket.service';
+import { WebSocketMessageFactory } from '@services/websocket/websocket-message-factory';
 import { environment } from '@environments/environment';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   loadUsers,
   loadUsersSuccess,
@@ -14,7 +14,10 @@ import {
   synchronizeUser,
   loadUser,
   loadUserSuccess,
-  loadUserFailure
+  loadUserFailure,
+  toggleUserFavorite,
+  toggleUserFavoriteSuccess,
+  toggleUserFavoriteFailure
 } from './store.actions';
 
 @Injectable()
@@ -22,8 +25,7 @@ export class StoreEffects {
   constructor(
     private actions$: Actions,
     private userService: UserService,
-    private websocketService: WebsocketService,
-    private snackBar: MatSnackBar,
+    private websocketService: WebsocketService
   ) { }
 
   loadUser$ = createEffect(() =>
@@ -53,21 +55,9 @@ export class StoreEffects {
   connectWebSocket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(connectWebSocket),
-      tap(() => {
-        this.websocketService.connect(environment.websocketUrl).subscribe(msg => {
-          try {
-            const response = JSON.parse(msg);
-            if (response.payload) {
-              if (response.type === 'ReceiveMessage') {
-                this.snackBar.open(new Date(Number(response.payload)).toLocaleString(), '', {
-                  duration: 2000
-                });
-              }
-            }
-          } catch (error) {
-            console.error('Error parsing WebSocket message:', error);
-          }
-        });
+      switchMap(() => {
+        this.websocketService.connect(environment.websocketUrl);
+        return of({ type: '[WebSocket] Connected' });
       })
     ), { dispatch: false }
   );
@@ -75,14 +65,24 @@ export class StoreEffects {
   synchronizeUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(synchronizeUser),
-      tap(({ userName }) => {
+      switchMap(({ id }) => {
         console.log('starting synchronization');
-        const message = JSON.stringify({
-          type: 'SynchronizeUser',
-          payload: userName,
-        });
+        const message = WebSocketMessageFactory.createSynchronizeUserMessage(id);
         this.websocketService.sendMessage(message);
+        return of({ type: '[WebSocket] Synchronize message sent' });
       })
     ), { dispatch: false }
+  );
+
+  toggleUserFavorite$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(toggleUserFavorite),
+      switchMap(({ userId, isFavorite }) =>
+        this.userService.updateUserFavorite(userId, isFavorite).pipe(
+          map(user => toggleUserFavoriteSuccess({ user })),
+          catchError(error => of(toggleUserFavoriteFailure({ error: error.message })))
+        )
+      )
+    )
   );
 }
