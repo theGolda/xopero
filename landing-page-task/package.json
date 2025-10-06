@@ -1,0 +1,21 @@
+{
+  "name": "landing-page-task",
+  "version": "1.0.0",
+  "description": "Landing page with contact form",
+  "scripts": {
+    "sass": "sass styles/main.scss styles/main.css",
+    "sass:watch": "sass --watch styles/main.scss:styles/main.css",
+    "sass:build": "sass styles/main.scss styles/main.css --style=compressed",
+    "dev": "npm run sass:watch",
+    "serve": "live-server --port=3000 --open=/ --watch=.",
+    "watch": "concurrently \"npm run sass:watch\" \"npm run serve\"",
+    "start": "npm run watch"
+  },
+  "devDependencies": {
+    "sass": "^1.69.0",
+    "live-server": "^1.2.2",
+    "concurrently": "^8.2.2"
+  },
+  "author": "",
+  "license": "MIT"
+}
