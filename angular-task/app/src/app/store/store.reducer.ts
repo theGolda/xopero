@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+
 import { 
   setCurrentUser,
   toggleUserFavorite,
@@ -11,8 +12,8 @@ import {
   loadUser,
   loadUserSuccess,
   loadUserFailure
-} from './store.actions'
-import { UserModel } from '@models/user.model'
+} from './store.actions';
+import { UserModel } from '@models/user.model';
 
 export interface State {
   userAmount: number;

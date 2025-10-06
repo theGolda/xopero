@@ -1,19 +1,20 @@
 import { Injectable, Injector } from '@angular/core';
+
 import { WebSocketMessageHandler } from './websocket-message.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketHandlerRegistry {
-  private handlers: Map<string, WebSocketMessageHandler> = new Map();
+  private _handlers: Map<string, WebSocketMessageHandler> = new Map();
 
-  constructor(private injector: Injector) {}
+  constructor(private _injector: Injector) {}
 
-  registerHandler(handler: WebSocketMessageHandler): void {
-    this.handlers.set(handler.messageType, handler);
+  public registerHandler(handler: WebSocketMessageHandler): void {
+    this._handlers.set(handler.messageType, handler);
   }
 
-  getHandler(messageType: string): WebSocketMessageHandler | undefined {
-    return this.handlers.get(messageType);
+  public getHandler(messageType: string): WebSocketMessageHandler | undefined {
+    return this._handlers.get(messageType);
   }
 }

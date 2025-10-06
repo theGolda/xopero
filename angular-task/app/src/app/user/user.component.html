@@ -1,21 +1,25 @@
 <ng-container *ngIf="!(loading$ | async)">
   <ng-container *ngIf="user$ | async as user; else noUser">
     <div class="user">
-      <h3>Username: {{user.name}}</h3>
-      <h4>Protected projects: {{user.protectedProjects}}</h4>
+      <h3>{{ 'user.username' | translate }}: {{user.name}}</h3>
+      <h4>{{ 'user.protectedProjects' | translate }}: {{user.protectedProjects}}</h4>
       <div class="buttons">
-        <button (click)="synchronizeUser(user.id)">Synchronize</button>
+        <button mat-raised-button color="primary" (click)="synchronizeUser(user.id)">
+          {{ 'user.synchronize' | translate }}
+        </button>
         <mat-slide-toggle
           [checked]="user.isFavorite"
           (change)="toggleFavorite(user, $event.checked)" color="primary">
-          Favorite
+          {{ 'user.favorite' | translate }}
         </mat-slide-toggle>
       </div>
     </div>
   </ng-container>
   <ng-template #noUser>
-    <p>No user found</p>
+    <p>{{ 'user.noUserFound' | translate }}</p>
   </ng-template>
 
-  <button [routerLink]="['/users']" class="go-back">Go back to list</button>
+  <button mat-raised-button [routerLink]="['/users']" class="go-back">
+    {{ 'navigation.goBack' | translate }}
+  </button>
 </ng-container>
