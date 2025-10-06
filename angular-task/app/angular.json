@@ -106,6 +106,24 @@
               "src/styles.scss"
             ],
             "scripts": []
+          },
+          "configurations": {
+            "coverage": {
+              "codeCoverage": true,
+              "codeCoverageExclude": [
+                "src/**/*.spec.ts",
+                "src/**/*.interface.ts",
+                "src/**/*.model.ts",
+                "src/**/*.enum.ts",
+                "src/**/*.constant.ts",
+                "src/**/*.config.ts",
+                "src/**/*.routes.ts",
+                "src/**/index.ts",
+                "src/main.ts",
+                "src/polyfills.ts",
+                "src/environments/**/*"
+              ]
+            }
           }
         }
       }

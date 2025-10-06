@@ -39,8 +39,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   public users$: Observable<UserModel[]> = this._store.select(selectUsers);
   public searchForm: FormGroup;
 
-  @ViewChild(MatPaginator) public paginator!: MatPaginator;
-  @ViewChild(MatSort) public sort!: MatSort;
+  @ViewChild(MatPaginator, {static: true}) public paginator!: MatPaginator;
+  @ViewChild(MatSort, {static: true}) public sort!: MatSort;
 
   constructor(
     private _store: Store,

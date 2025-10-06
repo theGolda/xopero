@@ -10,9 +10,9 @@ Perform a code review of the existing code (for the purpose of this task, assume
 [x] Refactor the code, fix issues,
 [x] Add filtering, sorting, and pagination for the user list (Reactive Forms + Angular Material),
 [x] Add functionality to add users to favorites (on the specific user’s subpage), along with displaying this information in the user table,
-[ ] Add a unit test for the `user-list` component,
+[x] Add a unit test for the `user-list` component,
 [x] Add a toast notification showing the time sent in the message of type `ReceiveMessage` from the WS server,
-[ ] Add i18next internationalization for selected UI elements of your choice.
+[x] Add i18next internationalization for selected UI elements of your choice.
 
 ## Running the app
 
