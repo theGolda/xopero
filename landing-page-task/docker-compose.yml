@@ -2,8 +2,22 @@ version: '3.8'
 
 services:
   php-apache:
-    image: php:8.1-apache
+    build:
+      context: .
+      dockerfile: dockerfile
     container_name: landing-php
     volumes:
       - ./:/var/www/html
-    restart: always
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - APACHE_LOG_DIR=/var/log/apache2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
