@@ -12,11 +12,11 @@ Run in the terminal:
 
 1. [ ] Check and fix errors related to, among others:
       [x]  the `docker-compose.yml` configuration,
-      [ ]  form security,
+      [x]  form security,
       [ ] page responsiveness.
-2. [ ] Implement sending form data to the `contact.php` script.
-3. [ ] Implement saving data to the `submissions.json` file in the `contact.php` script:
-      [ ] besides the form data, also save the submission date.
+2. [x] Implement sending form data to the `contact.php` script.
+3. [x] Implement saving data to the `submissions.json` file in the `contact.php` script:
+      [x] besides the form data, also save the submission date.
 4. [ ] Perform a brief analysis of the page regarding performance, accessibility, and SEO (e.g., using Lighthouse) and describe what and how you improved.
 
 ---
