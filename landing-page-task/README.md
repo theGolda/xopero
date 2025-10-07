@@ -17,7 +17,7 @@ Run in the terminal:
 2. [x] Implement sending form data to the `contact.php` script.
 3. [x] Implement saving data to the `submissions.json` file in the `contact.php` script:
       [x] besides the form data, also save the submission date.
-4. [ ] Perform a brief analysis of the page regarding performance, accessibility, and SEO (e.g., using Lighthouse) and describe what and how you improved.
+4. [x] Perform a brief analysis of the page regarding performance, accessibility, and SEO (e.g., using Lighthouse) and describe what and how you improved.
 
 ---
 
