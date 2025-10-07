@@ -3,17 +3,17 @@
 }
 
 html {
-  height: 100vh;
+  min-height: 100vh;
+  background: rgb(20.9181818182, 0, 88.5);
+  background: linear-gradient(0deg, rgb(20.9181818182, 0, 88.5) 0%, rgb(8.8636363636, 0, 37.5) 100%);
 }
 
 body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 10vh 0;
+  padding: 10vh 0.8rem;
   font-family: "Comic Sans MS", cursive, sans-serif;
-  color: #ffffff;
-  background: rgb(20.9181818182, 0, 88.5);
-  background: linear-gradient(0deg, rgb(20.9181818182, 0, 88.5) 0%, rgb(8.8636363636, 0, 37.5) 100%);
+  color: rgb(255, 255, 255);
   display: grid;
   grid-template-rows: min-content min-content;
   align-content: center;
@@ -27,6 +27,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
 form {
@@ -76,8 +78,8 @@ textarea {
 button {
   font-size: 120%;
   padding: 0.8rem 1.2rem;
-  background-color: #2700a5;
-  color: #ffffff;
+  background-color: rgb(39, 0, 165);
+  color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
   align-self: flex-end;
@@ -91,6 +93,23 @@ button {
 }
 button:hover {
   background-color: rgb(45.0272727273, 0, 190.5);
+}
+
+.snackbar {
+  padding: 0.8rem 1.2rem;
+  font-size: 90%;
+  border-radius: 0.2rem;
+  border: 0.1rem solid;
+  width: 100%;
+  max-width: 30rem;
+}
+.snackbar.success {
+  background-color: rgb(54, 161, 54);
+  border-color: rgb(34.7860465116, 103.7139534884, 34.7860465116);
+}
+.snackbar.error {
+  background-color: rgb(218, 62, 62);
+  border-color: rgb(170.7630434783, 32.7369565217, 32.7369565217);
 }
 
 /*# sourceMappingURL=main.css.map */

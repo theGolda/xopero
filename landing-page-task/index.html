@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="initial-scale=2" />
+  <meta name="viewport" content="initial-scale=1" />
   <title></title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
@@ -64,7 +64,7 @@
 
         if (result.status === 'success') {
           responseMsg.innerHTML = `<div class="success">${result.message}</div>`;
-          responseMsg.className = 'success';
+          responseMsg.classList.add('snackbar', 'success');
           form.reset(); // Clear the form
         } else {
           let errorMessage = result.message;
@@ -76,11 +76,11 @@
             errorMessage += '</ul>';
           }
           responseMsg.innerHTML = `<div class="error">${errorMessage}</div>`;
-          responseMsg.className = 'error';
+          responseMsg.classList.add('snackbar', 'error');
         }
       } catch (error) {
         responseMsg.innerHTML = '<div class="error">Network error. Please check your connection and try again.</div>';
-        responseMsg.className = 'error';
+        responseMsg.classList.add('snackbar', 'error');
       } finally {
         // Re-enable submit button
         submitBtn.disabled = false;

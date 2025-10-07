@@ -1,11 +1,17 @@
 $border-radius: 0.4rem;
 $border-radius-s: 0.2rem;
 
-$text-color: #ffffff;
-$primary-color: #2700a5;
+$text-color: rgb(255, 255, 255);
+$primary-color: rgb(39, 0, 165);
 $primary-color-light: lighten($primary-color, 5%);
 $primary-color-darker: darken($primary-color, 25%);
 $primary-color-dark: darken($primary-color, 15%);
+
+$success-color: rgb(54, 161, 54);
+$success-color-dark: darken($success-color, 15%);
+$error-color: rgb(218, 62, 62);
+$error-color-dark: darken($error-color, 15%);
+
 $spacing: 1.2rem;
 $spacing-s: 0.8rem;
 $spacing-xs: 0.4rem;
@@ -16,22 +22,24 @@ $font-size-s: 90%;
 $font-size-l: 120%;
 $font-size-xl: 150%;
 
+$border-width-s: 0.1rem;
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  height: 100vh;
+  min-height: 100vh;
+  background: $primary-color-dark;
+  background: linear-gradient(0deg, $primary-color-dark 0%, $primary-color-darker 100%);
 }
 
 body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 10vh 0;
+  padding: 10vh $spacing-s;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   color: $text-color;
-  background: $primary-color-dark;
-  background: linear-gradient(0deg, $primary-color-dark 0%, $primary-color-darker 100%);
   display: grid;
   grid-template-rows: min-content min-content;
   align-content: center;
@@ -45,6 +53,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: $spacing;
 }
 
 form {
@@ -109,5 +119,24 @@ button {
 
   &:hover {
     background-color: $primary-color-light;
+  }
+}
+
+.snackbar {
+  padding: $spacing-s $spacing;
+  font-size: $font-size-s;
+  border-radius: $border-radius-s;
+  border: $border-width-s solid;
+  width: 100%;
+  max-width: 30rem;
+
+  &.success {
+    background-color: $success-color;
+    border-color: $success-color-dark;
+  }
+
+  &.error {
+    background-color: $error-color;
+    border-color: $error-color-dark;
   }
 }
