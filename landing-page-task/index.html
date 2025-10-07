@@ -1,35 +1,93 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="initial-scale=2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title></title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
+
 <body>
-<header>
-  <h1>Contact with us</h1>
-  <p>Fill out the form – we will respond as soon as possible.</p>
-</header>
+  <header>
+    <h1>Contact with us</h1>
+    <p>Fill out the form – we will respond as soon as possible.</p>
+  </header>
 
-<main>
-  <form id="contactForm" method="POST">
-    <label>Name:</label><br />
-    <input type="text" id="name" name="name" /><br />
-    <label>Email</label><br />
-    <input type="email" id="email" name="email" /><br />
-    <label>Message</label><br />
-    <textarea id="message" name="message" rows="1"></textarea><br />
-    <button type="submit">Send</button>
-  </form>
-  <div id="responseMsg"></div>
-</main>
+  <main>
+    <form id="contactForm" method="POST" action="contact.php">
+      <div class="sender-identification">
+        <div class="form-field">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-field">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+      </div>
+      <button type="submit">Send</button>
+    </form>
+    <div id="responseMsg"></div>
+  </main>
 
-<script>
-  const form = document.getElementById('contactForm');
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-  });
-</script>
+  <script>
+    const form = document.getElementById('contactForm');
+    const responseMsg = document.getElementById('responseMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Disable submit button to prevent double submission
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      // Clear previous messages
+      responseMsg.innerHTML = '';
+      responseMsg.className = '';
+
+      try {
+        const formData = new FormData(form);
+
+        const response = await fetch('contact.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          responseMsg.innerHTML = `<div class="success">${result.message}</div>`;
+          responseMsg.classList.add('snackbar', 'success');
+          form.reset(); // Clear the form
+        } else {
+          let errorMessage = result.message;
+          if (result.errors && result.errors.length > 0) {
+            errorMessage += '<ul>';
+            result.errors.forEach(error => {
+              errorMessage += `<li>${error}</li>`;
+            });
+            errorMessage += '</ul>';
+          }
+          responseMsg.innerHTML = `<div class="error">${errorMessage}</div>`;
+          responseMsg.classList.add('snackbar', 'error');
+        }
+      } catch (error) {
+        responseMsg.innerHTML = '<div class="error">Network error. Please check your connection and try again.</div>';
+        responseMsg.classList.add('snackbar', 'error');
+      } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  </script>
 </body>
+
 </html>
