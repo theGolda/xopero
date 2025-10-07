@@ -10,10 +10,10 @@ Run in the terminal:
 
 ## Tasks
 
-1. [ ] Check and fix errors related to, among others:
+1. [x] Check and fix errors related to, among others:
       [x]  the `docker-compose.yml` configuration,
       [x]  form security,
-      [ ] page responsiveness.
+      [x] page responsiveness.
 2. [x] Implement sending form data to the `contact.php` script.
 3. [x] Implement saving data to the `submissions.json` file in the `contact.php` script:
       [x] besides the form data, also save the submission date.
